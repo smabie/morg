@@ -144,7 +144,7 @@ int copy_file(const char *file)
 {
 	static char real[PATH_MAX];
 	TagLib_File *tag_file;
-	char *p, *name, ext[5];
+	char *p, *s, *name, ext[5];
 	
 	(void)strlcpy(real, file, PATH_MAX);
 	if ((p = strrchr(real, '.')) == NULL)
@@ -159,13 +159,6 @@ int copy_file(const char *file)
 	    strcmp(p, "ogg") != 0)
 		return 0;
 	(void)strlcpy(ext, p, sizeof(ext));
-	if (vflg) {
-		if (realpath(file, real) == NULL) {
-			warn("realpath: %s", file);
-			return 1;
-		}
-		(void)fprintf(stderr, "%s\n", real);
-	}
 	if ((name = basename(file)) == NULL) {
 		warn("basename: %s", file);
 		return 1;
@@ -180,9 +173,15 @@ int copy_file(const char *file)
 		taglib_file_free(tag_file);
 		return 1;
 	}
-
-	(void)system(make_copy(cpstr, file, 
-			       make_path(taglib_file_tag(tag_file), ext)));
+	s = make_path(taglib_file_tag(tag_file), ext);
+	if (vflg) {
+		if (realpath(file, real) == NULL) {
+			warn("realpath: %s", file);
+			return 1;
+		}
+		(void)fprintf(stderr, "%s -> %s\n", real, s);
+	}
+	(void)system(make_copy(cpstr, file, s));
 
 	taglib_tag_free_strings();
 	taglib_file_free(tag_file);
@@ -220,7 +219,6 @@ char *
 make_path(TagLib_Tag *tags, const char *type)
 {
 #define SAFE(s) (strlen(s) != 0 ? (s) : " ")
-#define INT_SAFE(s) ((*s) != '0' ? (s) : " ")
 	static char ret[2048];
 	static char yearbuf[5];
 	static char trackbuf[3];
@@ -239,14 +237,15 @@ make_path(TagLib_Tag *tags, const char *type)
 		{ "type", NULL }
 	};
 
-	(void)snprintf(trackbuf, 3, "%d", taglib_tag_track(tags));
+	(void)snprintf(trackbuf, 3, taglib_tag_track(tags) < 10 ? "0%d" : "%d",
+		       taglib_tag_track(tags));
  	(void)snprintf(yearbuf, 5, "%d", taglib_tag_year(tags));
-	table[0].p = INT_SAFE(trackbuf);
+	table[0].p = trackbuf;
 	table[1].p = SAFE(taglib_tag_title(tags));
 	table[2].p = SAFE(taglib_tag_artist(tags));
 	table[3].p = SAFE(taglib_tag_album(tags));
 	table[4].p = SAFE(taglib_tag_genre(tags));
-	table[5].p = INT_SAFE(yearbuf);
+	table[5].p = yearbuf;
 	table[6].p = type;
 
 	for (p = fmtstr, d = 0; *p != '\0' && d < sizeof(ret); p++) {
