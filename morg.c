@@ -151,7 +151,7 @@ int copy_file(const char *file)
 		return 1;
 	*p = '/';
 	if ((p = basename(real)) == NULL) {
-		warn("basename of %s", real);
+		warn("basename: %s", real);
 		return 1;
  	}
 	if (strcmp(p, "mp3") != 0 && 
