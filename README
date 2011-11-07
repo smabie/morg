@@ -3,6 +3,7 @@ morg is a C command-line utility that organizes your music collection.
 Features:
     * Support for MP3, OGG, and FLAC files
     * Flexible, allows arbitary commands to be executed on each music file
+    * Simple, does its job and nothing more
     * Uses the very fast Taglib library for retrieving metadata
     * Released into the public domain
 
