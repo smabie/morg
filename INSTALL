@@ -1,0 +1,5 @@
+Compile and install with:
+
+$ make
+$ cp morg /path/to/bin
+$ cp morg.1 /path/to/man
