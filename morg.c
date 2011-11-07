@@ -144,7 +144,7 @@ int copy_file(const char *file)
 {
 	static char real[PATH_MAX];
 	TagLib_File *tag_file;
-	char *p, *s, *name, ext[5];
+	char *p, *name, ext[5];
 	
 	(void)strlcpy(real, file, PATH_MAX);
 	if ((p = strrchr(real, '.')) == NULL)
@@ -173,15 +173,15 @@ int copy_file(const char *file)
 		taglib_file_free(tag_file);
 		return 1;
 	}
-	s = make_path(taglib_file_tag(tag_file), ext);
 	if (vflg) {
 		if (realpath(file, real) == NULL) {
 			warn("realpath: %s", file);
 			return 1;
 		}
-		(void)fprintf(stderr, "%s -> %s\n", real, s);
+		(void)fprintf(stderr, "%s\n", real);
 	}
-	(void)system(make_copy(cpstr, file, s));
+	(void)system(make_copy(cpstr, file, 
+			       make_path(taglib_file_tag(tag_file), ext)));
 
 	taglib_tag_free_strings();
 	taglib_file_free(tag_file);
