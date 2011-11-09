@@ -1,7 +1,7 @@
 .\"
 .\" This file is public domain as declared by Sturm Mabie.
 .\" 
-.Dd $Mdocdate$
+.Dd $Mdocdate: November 9 2011$
 .Dt MORG 1
 .Os
 .Sh NAME
@@ -12,7 +12,6 @@
 .Op Fl v
 .Op Fl s Ar fmtstr
 .Op Fl t Ar cpstr
-.Cm 
 .Ar file ...
 .Sh DESCRIPTION
 .Nm
@@ -22,7 +21,7 @@ processing each directory specified to it on the command-line. By default,
 .Nm
 uses mkdir(1) and cp(1) to process each file by means of a format string (see
 .Nm TRANSFER STRING )
-and a transfer string (see 
+and a transfer string (see
 .Nm FORMAT STRING ) .
 .Pp
 The options are as follows:
@@ -30,7 +29,7 @@ The options are as follows:
 .It Fl s Ar fmtstr
 Make
 .Nm
-use 
+use
 .Em fmtstr
 as the format string, overriding the environment variable
 .Em MORGFMT
@@ -41,9 +40,10 @@ Override the default transfer string and the environment variable
 with
 .Em cpstr .
 .It Fl v
-Verbose mode. Writes to 
+Verbose mode. Writes to
 .Em stderr
 all files processed.
+.El
 .Sh TRANSFER STRING
 The transfer string is the command(s) that are executed by sh(1) in order to
 process a file. The transfer string can either be specified on the command-line
@@ -53,8 +53,8 @@ The transfer string is first processed so that any occurrences of
 .Em %%
 are replaced by a `%';
 .Em %dst
-is replaced by the destination path that is specified by the transfer string; and 
-.Em %src 
+is replaced by the destination path that is specified by the transfer string; and
+.Em %src
 is replaced by the path to each file being processed. If neither the environment
 variable nor the command-line argument is present,
 the transfer string defaults to:
@@ -72,19 +72,19 @@ corresponding metadata of the audio file. This works in much the same way that
 printf(1) work. The following keywords are supported:
 .Em %artist ,
 .Em %album ,
-.Em %genre , 
+.Em %genre ,
 .Em %title ,
 .Em %track ,
 .Em %type ,
 .Em %year ,
 and
-.Em %% . 
-.Em %% 
-refers to a literal `%' and 
+.Em %% .
+.Em %%
+refers to a literal `%' and
 .Em %type
 refers to the file extension of the original track (``flac'', ``ogg'', or
 ``mp3''). The others correspond to their respective tags in the metadata of the
-file. 
+file.
 .Pp
 You can either specify the format string on the command-line, the environment variable
 .Em MORGFMT ,
@@ -99,7 +99,7 @@ Another oddity is the use of the single quotes around "$USER". The single quotes
 actually do not match each other, but rather they match the single quotes
 surrounding each instance of the
 .Em %dst
-keyword in the transfer string. 
+keyword in the transfer string.
 .Sh ENVIRONMENT
 The environment variables recognized by
 .Nm
@@ -109,5 +109,7 @@ are as follows:
 Specify the transfer string that is executed by sh(1) to be used.
 .It MORGFMT
 Specify the format string to be used.
+.El
 .Sh AUTHOR
-This program was created by Sturm Mabie (sturm@cryptm.org).
+This program was created by Sturm Mabie
+.Mt ( sturm@cryptm.org ) .
