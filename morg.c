@@ -265,7 +265,7 @@ make_path(TagLib_Tag *tags, const char *type)
 				}
 			}
 		} else
-			ret[d++] = *p;
+			ret[d++] = *p == '/' ? '_' : *p;
 	}
 	ret[d] = '\0';
 	return ret;
