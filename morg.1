@@ -19,7 +19,11 @@ is a command-line utility that organizes MP3, OGG, and FLAC audio files based
 upon their tag metadata. It works by processing each file and recursively
 processing each directory specified to it on the command-line. By default,
 .Nm
-uses mkdir(1) and cp(1) to process each file by means of a format string (see
+uses 
+.Xr mkdir 1
+and
+.Xr cp 1
+to process each file by means of a format string (see
 .Nm TRANSFER STRING )
 and a transfer string (see
 .Nm FORMAT STRING ) .
@@ -45,7 +49,9 @@ Verbose mode. Writes to
 all files processed.
 .El
 .Sh TRANSFER STRING
-The transfer string is the command(s) that are executed by sh(1) in order to
+The transfer string is the command(s) that are executed by 
+.Xr sh 1
+in order to
 process a file. The transfer string can either be specified on the command-line
 or through the environment variable
 .Em MORGCP .
@@ -62,8 +68,11 @@ the transfer string defaults to:
 .Dl mkdir -p \\"`dirname '%dst'`\\" && cp '%src' '%dst'
 .Pp
 This is a reasonable default in most use cases, will do exactly what you
-want. One change that one might make would be to issue mv(1) instead of cp(1) in
-order to conserve disk space.
+want. One change that one might make would be to issue 
+.Xr mv 1
+instead of 
+.Xr cp 1
+in order to conserve disk space.
 .Sh FORMAT STRING
 Essentially, the format string is just a string that specifies the destination
 and file name template for the processed files. In the format string, a variety
