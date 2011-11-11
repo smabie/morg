@@ -226,8 +226,8 @@ make_path(TagLib_Tag *tags, const char *type)
 	char *p;
 	int d, c;
 	struct {
-		const char *s;
-		const char *p;
+		char *s;
+		char *p;
 	} table[] = {
 		{ "track", NULL	},
 		{ "title", NULL },
@@ -247,7 +247,7 @@ make_path(TagLib_Tag *tags, const char *type)
 	table[3].p = replace_slash(SAFE(taglib_tag_album(tags)));
 	table[4].p = replace_slash(SAFE(taglib_tag_genre(tags)));
 	table[5].p = yearbuf;
-	table[6].p = type;
+	table[6].p = (char *)type;
 
 
 	for (p = fmtstr, d = 0; *p != '\0' && d < sizeof(ret); p++) {
@@ -269,6 +269,11 @@ make_path(TagLib_Tag *tags, const char *type)
 			ret[d++] = *p;
 	}
 	ret[d] = '\0';
+
+	free(table[1].p);
+	free(table[2].p);
+	free(table[3].p);	
+	free(table[4].p);
 	return ret;
 }
 
