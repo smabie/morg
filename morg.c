@@ -42,6 +42,7 @@ int find_files(const char *);
 
 char *make_path(TagLib_Tag *, const char *);
 char *make_copy(const char *, const char *, const char *);
+char *replace_slash(char *);
 
 void usage();
 
@@ -241,12 +242,13 @@ make_path(TagLib_Tag *tags, const char *type)
 		       taglib_tag_track(tags));
  	(void)snprintf(yearbuf, 5, "%d", taglib_tag_year(tags));
 	table[0].p = trackbuf;
-	table[1].p = SAFE(taglib_tag_title(tags));
-	table[2].p = SAFE(taglib_tag_artist(tags));
-	table[3].p = SAFE(taglib_tag_album(tags));
-	table[4].p = SAFE(taglib_tag_genre(tags));
+	table[1].p = replace_slash(SAFE(taglib_tag_title(tags)));
+	table[2].p = replace_slash(SAFE(taglib_tag_artist(tags)));
+	table[3].p = replace_slash(SAFE(taglib_tag_album(tags)));
+	table[4].p = replace_slash(SAFE(taglib_tag_genre(tags)));
 	table[5].p = yearbuf;
 	table[6].p = type;
+
 
 	for (p = fmtstr, d = 0; *p != '\0' && d < sizeof(ret); p++) {
 		if (*p == '%') {
@@ -267,6 +269,20 @@ make_path(TagLib_Tag *tags, const char *type)
 			ret[d++] = *p;
 	}
 	ret[d] = '\0';
+	return ret;
+}
+
+char *
+replace_slash(char *s)
+{
+	char *ret, *p;
+
+	if ((ret = strdup(s)) == NULL)
+		err(1, "strdup");
+	for (p = ret; *p != '\0'; p++) {
+		if (*p == '/')
+			*p = '_';
+	}
 	return ret;
 }
 
