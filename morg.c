@@ -256,8 +256,8 @@ make_path(TagLib_Tag *tags, const char *type)
 				ret[d++] = *p;
 				continue;
 			}
-			for (c = 0; c < sizeof(ret) / sizeof(*ret); c++) {
-				if (strncmp(p + 1, table[c].s, 
+			for (c = 0; c < sizeof(table) / sizeof(*table); c++) {
+				if (strncmp(p + 1, table[c].s,
 					    strlen(table[c].s)) == 0) {
 					d += strlcpy(&ret[d], 
 						     table[c].p, sizeof(ret));
