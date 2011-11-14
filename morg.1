@@ -19,7 +19,7 @@ is a command-line utility that organizes MP3, OGG, and FLAC audio files based
 upon their tag metadata. It works by processing each file and recursively
 processing each directory specified to it on the command-line. By default,
 .Nm
-uses 
+uses
 .Xr mkdir 1
 and
 .Xr cp 1
@@ -47,7 +47,7 @@ Verbose mode. Writes to
 all files processed.
 .El
 .Sh TRANSFER STRING
-The transfer string is the command(s) that are executed by 
+The transfer string is the command(s) that are executed by
 .Xr sh 1
 in order to
 process a file. The transfer string can either be specified on the command-line
@@ -66,9 +66,9 @@ the transfer string defaults to:
 .Dl mkdir -p \\"`dirname '%dst'`\\" && cp '%src' '%dst'
 .Pp
 This is a reasonable default in most use cases, will do exactly what you
-want. One change that one might make would be to issue 
+want. One change that one might make would be to issue
 .Xr mv 1
-instead of 
+instead of
 .Xr cp 1
 in order to conserve disk space.
 .Sh FORMAT STRING
