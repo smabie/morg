@@ -24,6 +24,7 @@
 #define FMTSTR								\
 	"/home/\'\"$USER\"\'/music/%artist/%artist - %album/%track %title.%type"
 #define CPSTR	"mkdir -p \"`dirname '%dst'`\" && cp '%src' '%dst'"
+#define REPLACESTR "/_"
 
 #ifdef __GLIBC__
 #undef basename
@@ -42,11 +43,11 @@ int find_files(const char *);
 
 char *make_path(TagLib_Tag *, const char *);
 char *make_copy(const char *, const char *, const char *);
-char *replace_slash(char *);
+char *replace(char *);
 
 void usage();
 
-char *fmtstr, *cpstr;
+char *fmtstr, *cpstr, *replacestr;
 int vflg;
 
 int
@@ -59,6 +60,8 @@ main(int argc, char **argv)
 		fmtstr = FMTSTR;
 	if ((cpstr = getenv("MORGCP")) == NULL)
 		cpstr = CPSTR;
+	if ((replacestr = getenv("MORGREPLACE")) == NULL)
+		replacestr = REPLACESTR;
 	while ((c = getopt(argc, argv, "s:t:v")) != -1) {
 		switch (c) {
 		case 's':	/* format string specified */
@@ -235,20 +238,19 @@ make_path(TagLib_Tag *tags, const char *type)
 		{ "album", NULL },
 		{ "genre", NULL },
 		{ "year",  NULL },
-		{ "type", NULL }
+		{ "type",  NULL }
 	};
 
 	(void)snprintf(trackbuf, 3, taglib_tag_track(tags) < 10 ? "0%d" : "%d",
 		       taglib_tag_track(tags));
  	(void)snprintf(yearbuf, 5, "%d", taglib_tag_year(tags));
 	table[0].p = trackbuf;
-	table[1].p = replace_slash(SAFE(taglib_tag_title(tags)));
-	table[2].p = replace_slash(SAFE(taglib_tag_artist(tags)));
-	table[3].p = replace_slash(SAFE(taglib_tag_album(tags)));
-	table[4].p = replace_slash(SAFE(taglib_tag_genre(tags)));
+	table[1].p = replace(SAFE(taglib_tag_title(tags)));
+	table[2].p = replace(SAFE(taglib_tag_artist(tags)));
+	table[3].p = replace(SAFE(taglib_tag_album(tags)));
+	table[4].p = replace(SAFE(taglib_tag_genre(tags)));
 	table[5].p = yearbuf;
 	table[6].p = (char *)type;
-
 
 	for (p = fmtstr, d = 0; *p != '\0' && d < sizeof(ret); p++) {
 		if (*p == '%') {
@@ -278,15 +280,24 @@ make_path(TagLib_Tag *tags, const char *type)
 }
 
 char *
-replace_slash(char *s)
+replace(char *s)
 {
+	int c;
+	size_t len;
 	char *ret, *p;
 
 	if ((ret = strdup(s)) == NULL)
 		err(1, "strdup");
-	for (p = ret; *p != '\0'; p++) {
-		if (*p == '/')
-			*p = '_';
+
+	if ((len = strlen(replacestr)) % 2 != 0)
+		warnx("MORGREPLACE length not even, performing no replacements");
+	else {
+		for (p = ret; *p != '\0'; p++) {
+			for (c = 0; c < len; c += 2) {
+				if (*p == replacestr[c])
+					*p = replacestr[c + 1];
+			}
+		}
 	}
 	return ret;
 }

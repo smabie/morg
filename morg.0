@@ -50,7 +50,7 @@ FFOORRMMAATT SSTTRRIINNGG
      in much the same way that printf(1) work. The following keywords are
      supported: _%_a_r_t_i_s_t, _%_a_l_b_u_m, _%_g_e_n_r_e, _%_t_i_t_l_e, _%_t_r_a_c_k, _%_t_y_p_e, _%_y_e_a_r, and _%_%.
      _%_% refers to a literal `%' and _%_t_y_p_e refers to the file extension of the
-     original track (``flac'', ``ogg'', or ``mp3''). The others correspond to
+     original track (``flac'', ``ogg'', or ``mp3'').  The others correspond to
      their respective tags in the metadata of the file.
 
      You can either specify the format string on the command-line, the
@@ -72,6 +72,12 @@ EENNVVIIRROONNMMEENNTT
 
      MORGFMT
              Specify the format string to be used.
+
+     MORGREPLACE
+             An even length string that defines what single character
+             replacements to make.  Each character in an even position is
+             replaced by the subsequent character in the odd position.
+             Defaults to ``/_''.
 
 AAUUTTHHOORR
      This program was created by Sturm Mabie (_s_t_u_r_m_@_c_r_y_p_t_m_._o_r_g).
