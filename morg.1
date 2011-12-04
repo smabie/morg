@@ -63,7 +63,7 @@ is replaced by the path to each file being processed. If neither the environment
 variable nor the command-line argument is present,
 the transfer string defaults to:
 .Pp
-.Dl mkdir -p \\"`dirname '%dst'`\\" && cp '%src' '%dst'
+.Dl mkdir -p \\"`dirname \\"%dst\\"`\\" && cp \\"%src\\" \\"%dst\\"
 .Pp
 This is a reasonable default in most use cases, will do exactly what you
 want. One change that one might make would be to issue

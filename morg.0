@@ -36,7 +36,7 @@ TTRRAANNSSFFEERR SSTTRRIINNGG
      processed. If neither the environment variable nor the command-line
      argument is present, the transfer string defaults to:
 
-           mkdir -p "`dirname '%dst'`" && cp '%src' '%dst'
+           mkdir -p "`dirname "%dst"`" && cp "%src" "%dst"
 
      This is a reasonable default in most use cases, will do exactly what you
      want. One change that one might make would be to issue mv(1) instead of

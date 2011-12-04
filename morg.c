@@ -23,7 +23,7 @@
 
 #define FMTSTR								\
 	"/home/\'\"$USER\"\'/music/%artist/%artist - %album/%track %title.%type"
-#define CPSTR	"mkdir -p \"`dirname '%dst'`\" && cp '%src' '%dst'"
+#define CPSTR	"mkdir -p \"`dirname \"%dst\"`\" && cp \"%src\" \"%dst\""
 #define REPLACESTR "/_"
 
 #ifdef __GLIBC__
@@ -146,9 +146,10 @@ er:
 
 int copy_file(const char *file)
 {
-	static char real[PATH_MAX];
+	static char real[PATH_MAX], src[PATH_MAX], dst[PATH_MAX];
 	TagLib_File *tag_file;
 	char *p, *name, ext[5];
+	int c;
 	
 	(void)strlcpy(real, file, PATH_MAX);
 	if ((p = strrchr(real, '.')) == NULL)
@@ -184,8 +185,29 @@ int copy_file(const char *file)
 		}
 		(void)fprintf(stderr, "%s\n", real);
 	}
-	(void)system(make_copy(cpstr, file, 
-			       make_path(taglib_file_tag(tag_file), ext)));
+	
+	for (c = 0, p = (char *)file; c < sizeof(src) && *p != '\0'; p++) {
+		if (*p == '"') {
+			src[c++] = '\\';
+			src[c++] = '"';
+		} else
+			src[c++] = *p;
+			
+	}
+	src[c] = '\0';
+
+	for (c = 0, p = make_path(taglib_file_tag(tag_file), ext); 
+	     c < sizeof(dst) && *p != '\0'; p++) {
+		if (*p == '"') {
+			dst[c++] = '\\';
+			dst[c++] = '"';
+		} else
+			dst[c++] = *p;
+			
+	}
+	dst[c] = '\0';
+
+	(void)system(make_copy(cpstr, src, dst));
 
 	taglib_tag_free_strings();
 	taglib_file_free(tag_file);
