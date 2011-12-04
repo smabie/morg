@@ -77,7 +77,7 @@ EENNVVIIRROONNMMEENNTT
              An even length string that defines what single character
              replacements to make.  Each character in an even position is
              replaced by the subsequent character in the odd position.
-             Defaults to ``/_''.
+             Defaults to ``/_''.  A more portable value might be ``/_:-?_''.
 
 AAUUTTHHOORR
      This program was created by Sturm Mabie (_s_t_u_r_m_@_c_r_y_p_t_m_._o_r_g).
