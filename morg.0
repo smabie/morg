@@ -38,9 +38,9 @@ TTRRAANNSSFFEERR SSTTRRIINNGG
 
            mkdir -p "`dirname "%dst"`" && cp "%src" "%dst"
 
-     This is a reasonable default in most use cases, will do exactly what you
-     want. One change that one might make would be to issue mv(1) instead of
-     cp(1) in order to conserve disk space.
+     This is a reasonable default in most use cases. One change that one might
+     make would be to issue mv(1) instead of cp(1) in order to conserve disk
+     space.
 
 FFOORRMMAATT SSTTRRIINNGG
      Essentially, the format string is just a string that specifies the
@@ -82,4 +82,4 @@ EENNVVIIRROONNMMEENNTT
 AAUUTTHHOORR
      This program was created by Sturm Mabie (_s_t_u_r_m_@_c_r_y_p_t_m_._o_r_g).
 
-OpenBSD 5.0                    November 9, 2011                    OpenBSD 5.0
+OpenBSD 5.0                    December 4, 2011                    OpenBSD 5.0
