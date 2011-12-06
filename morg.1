@@ -1,6 +1,6 @@
 .\"
 .\" This file is public domain as declared by Sturm Mabie.
-.\" 
+.\"
 .Dd $Mdocdate: December 4 2011$
 .Dt MORG 1
 .Os
@@ -55,7 +55,8 @@ or through the environment variable
 .Em MORGCP .
 The transfer string is first processed so that any occurrences of
 .Em %%
-are replaced by a `%';
+are replaced by a 
+.Sq % ;
 .Em %dst
 is replaced by the destination path that is specified by the transfer string; and
 .Em %src
@@ -87,7 +88,9 @@ printf(1) work. The following keywords are supported:
 and
 .Em %% .
 .Em %%
-refers to a literal `%' and
+refers to a literal 
+.Sq %
+and
 .Em %type
 refers to the file extension of the original track
 .Dq ( flac ,
@@ -104,10 +107,15 @@ or use the default. The default format string is:
 .Pp
 We use the environment variable
 .Em USER
-instead of `~' because not all implementations of mkdir(1) handle `~' correctly.
-Another oddity is the use of the single quotes around "$USER". The single quotes
-actually do not match each other, but rather they match the single quotes
-surrounding each instance of the
+instead of 
+.Sq ~
+because not all implementations of 
+.Xr mkdir 1
+handle
+.Sq ~
+correctly. Another oddity is the use of the single quotes around "$USER". The
+single quotes actually do not match each other, but rather they match the single
+quotes surrounding each instance of the
 .Em %dst
 keyword in the transfer string.
 .Sh ENVIRONMENT
