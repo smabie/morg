@@ -60,7 +60,7 @@ FFOORRMMAATT SSTTRRIINNGG
            /home/'"$USER"'/music/%artist/%artist - %album/%track %title.%type
 
      We use the environment variable _U_S_E_R instead of `~' because not all
-     implementations of mkdir(1) handle `~' correctly.  Another oddity is the
+     implementations of mkdir(1) handle `~' correctly. Another oddity is the
      use of the single quotes around "$USER". The single quotes actually do
      not match each other, but rather they match the single quotes surrounding
      each instance of the _%_d_s_t keyword in the transfer string.
@@ -79,7 +79,7 @@ EENNVVIIRROONNMMEENNTT
              replaced by the subsequent character in the odd position.
              Defaults to ``/_''.  A more portable value might be ``/_:-?_''.
 
-AAUUTTHHOORR
+AAUUTTHHOORRSS
      This program was created by Sturm Mabie (_s_t_u_r_m_@_c_r_y_p_t_m_._o_r_g).
 
 OpenBSD 5.0                    December 4, 2011                    OpenBSD 5.0
