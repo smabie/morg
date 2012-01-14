@@ -312,7 +312,7 @@ replace(char *s)
 		err(1, "strdup");
 
 	if ((len = strlen(replacestr)) % 2 != 0)
-		warnx("MORGREPLACE length not even, performing no replacements");
+		warnx("MORGREPLACE length not even, no replacements made");
 	else {
 		for (p = ret; *p != '\0'; p++) {
 			for (c = 0; c < len; c += 2) {
