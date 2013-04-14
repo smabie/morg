@@ -1,85 +1,85 @@
-MORG(1)			   OpenBSD Reference Manual		       MORG(1)
+MORG(1)                    OpenBSD Reference Manual                    MORG(1)
 
-NAME
-     morg - command-line music organizer
+NNAAMMEE
+     mmoorrgg - command-line music organizer
 
-SYNOPSIS
-     morg [-v] [-s fmtstr] [-t cpstr] file ...
+SSYYNNOOPPSSIISS
+     mmoorrgg [--vv] [--ss _f_m_t_s_t_r] [--tt _c_p_s_t_r] _f_i_l_e _._._.
 
-DESCRIPTION
-     morg is a command-line utility that organizes MP3, OGG, and FLAC audio
+DDEESSCCRRIIPPTTIIOONN
+     mmoorrgg is a command-line utility that organizes MP3, OGG, and FLAC audio
      files based upon their tag metadata. It works by processing each file and
      recursively processing each directory specified to it on the command-
-     line. By default, morg uses mkdir(1) and cp(1) to process each file by
+     line. By default, mmoorrgg uses mkdir(1) and cp(1) to process each file by
      means of a transfer string (see TRANSFER STRING) and a format string (see
      FORMAT STRING).
 
      The options are as follows:
 
-     -s fmtstr
-	     Make morg use fmtstr as the format string, overriding the
-	     environment variable MORGFMT and the default format string.
+     --ss _f_m_t_s_t_r
+             Make mmoorrgg use _f_m_t_s_t_r as the format string, overriding the
+             environment variable _M_O_R_G_F_M_T and the default format string.
 
-     -t cpstr
-	     Override the default transfer string and the environment variable
-	     MORGCP with cpstr.
+     --tt _c_p_s_t_r
+             Override the default transfer string and the environment variable
+             _M_O_R_G_C_P with _c_p_s_t_r.
 
-     -v	     Verbose mode. Writes to stderr all files processed.
+     --vv      Verbose mode. Writes to _s_t_d_e_r_r all files processed.
 
-TRANSFER STRING
+TTRRAANNSSFFEERR SSTTRRIINNGG
      The transfer string is the command(s) that are executed by sh(1) in order
      to process a file. The transfer string can either be specified on the
-     command-line or through the environment variable MORGCP.  The transfer
-     string is first processed so that any occurrences of %% are replaced by a
-     `%'; %dst is replaced by the destination path that is specified by the
-     transfer string; and %src is replaced by the path to each file being
+     command-line or through the environment variable _M_O_R_G_C_P.  The transfer
+     string is first processed so that any occurrences of _%_% are replaced by a
+     `%'; _%_d_s_t is replaced by the destination path that is specified by the
+     transfer string; and _%_s_r_c is replaced by the path to each file being
      processed. If neither the environment variable nor the command-line
      argument is present, the transfer string defaults to:
 
-	   mkdir -p "`dirname "%dst"`" && cp "%src" "%dst"
+           mkdir -p "`dirname "%dst"`" && cp "%src" "%dst"
 
      This is a reasonable default in most use cases. One change that one might
      make would be to issue mv(1) instead of cp(1) in order to conserve disk
      space.
 
-FORMAT STRING
+FFOORRMMAATT SSTTRRIINNGG
      Essentially, the format string is just a string that specifies the
      destination and file name template for the processed files. In the format
      string, a variety of special keywords are supported that specify their
      replacement by the corresponding metadata of the audio file. This works
      in much the same way that printf(1) work. The following keywords are
-     supported: %artist, %album, %genre, %title, %track, %type, %year, and %%.
-     %% refers to a literal `%' and %type refers to the file extension of the
+     supported: _%_a_r_t_i_s_t, _%_a_l_b_u_m, _%_g_e_n_r_e, _%_t_i_t_l_e, _%_t_r_a_c_k, _%_t_y_p_e, _%_y_e_a_r, and _%_%.
+     _%_% refers to a literal `%' and _%_t_y_p_e refers to the file extension of the
      original track (``flac'', ``ogg'', or ``mp3'').  The others correspond to
      their respective tags in the metadata of the file.
 
      You can either specify the format string on the command-line, the
-     environment variable MORGFMT, or use the default. The default format
+     environment variable _M_O_R_G_F_M_T, or use the default. The default format
      string is:
 
-	   /home/'"$USER"'/music/%artist/%artist - %album/%track %title.%type
+           /home/'"$USER"'/music/%artist/%artist - %album/%track %title.%type
 
-     We use the environment variable USER instead of `~' because not all
+     We use the environment variable _U_S_E_R instead of `~' because not all
      implementations of mkdir(1) handle `~' correctly. Another oddity is the
      use of the single quotes around "$USER". The single quotes actually do
      not match each other, but rather they match the single quotes surrounding
-     each instance of the %dst keyword in the transfer string.
+     each instance of the _%_d_s_t keyword in the transfer string.
 
-ENVIRONMENT
-     The environment variables recognized by morg are as follows:
+EENNVVIIRROONNMMEENNTT
+     The environment variables recognized by mmoorrgg are as follows:
 
      MORGCP  Specify the transfer string that is executed by sh(1) to be used.
 
      MORGFMT
-	     Specify the format string to be used.
+             Specify the format string to be used.
 
      MORGREPLACE
-	     An even length string that defines what single character
-	     replacements to make.  Each character in an even position is
-	     replaced by the subsequent character in the odd position.
-	     Defaults to ``/_''.  A more portable value might be ``/_:-?_''.
+             An even length string that defines what single character
+             replacements to make.  Each character in an even position is
+             replaced by the subsequent character in the odd position.
+             Defaults to ``/_''.  A more portable value might be ``/_:-?_''.
 
-AUTHORS
-     This program was created by Sturm Mabie (sturm@cryptm.org).
+AAUUTTHHOORRSS
+     This program was created by Sturm Mabie (_s_t_u_r_m_@_c_r_y_p_t_m_._o_r_g).
 
-OpenBSD 5.3		       December 4, 2011			   OpenBSD 5.3
+OpenBSD 5.3                    December 4, 2011                    OpenBSD 5.3
