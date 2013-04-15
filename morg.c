@@ -22,7 +22,7 @@
 #include <taglib/tag_c.h>
 
 #define FMTSTR								\
-	"/home/\'\"$USER\"\'/music/%artist/%artist - %album/%track %title.%type"
+	"/home/$USER/music/%artist/%artist - %album/%track %title.%type"
 #define CPSTR	"mkdir -p \"`dirname \"%dst\"`\" && cp \"%src\" \"%dst\""
 #define REPLACESTR "/_"
 

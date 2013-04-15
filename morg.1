@@ -104,7 +104,7 @@ You can either specify the format string on the command-line, the environment va
 .Em MORGFMT ,
 or use the default. The default format string is:
 .Pp
-.Dl /home/'"$USER"'/music/%artist/%artist - %album/%track %title.%type
+.Dl /home/$USER/music/%artist/%artist - %album/%track %title.%type
 .Pp
 We use the environment variable
 .Em USER
@@ -114,11 +114,7 @@ because not all implementations of
 .Xr mkdir 1
 handle
 .Sq ~
-correctly. Another oddity is the use of the single quotes around "$USER". The
-single quotes actually do not match each other, but rather they match the single
-quotes surrounding each instance of the
-.Em %dst
-keyword in the transfer string.
+correctly.
 .Sh ENVIRONMENT
 The environment variables recognized by
 .Nm

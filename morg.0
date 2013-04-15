@@ -57,13 +57,10 @@ FFOORRMMAATT SSTTRRIINNGG
      environment variable _M_O_R_G_F_M_T, or use the default. The default format
      string is:
 
-           /home/'"$USER"'/music/%artist/%artist - %album/%track %title.%type
+           /home/$USER/music/%artist/%artist - %album/%track %title.%type
 
      We use the environment variable _U_S_E_R instead of `~' because not all
-     implementations of mkdir(1) handle `~' correctly. Another oddity is the
-     use of the single quotes around "$USER". The single quotes actually do
-     not match each other, but rather they match the single quotes surrounding
-     each instance of the _%_d_s_t keyword in the transfer string.
+     implementations of mkdir(1) handle `~' correctly.
 
 EENNVVIIRROONNMMEENNTT
      The environment variables recognized by mmoorrgg are as follows:
