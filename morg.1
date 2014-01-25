@@ -1,0 +1,139 @@
+.\" morg.1
+.\"
+.\" This file is public domain as declared by Sturm Mabie.
+.\"
+.Dd $Mdocdate: December 4 2011$
+.Dt MORG 1
+.Os
+.Sh NAME
+.Nm morg
+.Nd command-line music organizer
+.Sh SYNOPSIS
+.Nm morg
+.Op Fl v
+.Op Fl s Ar fmtstr
+.Op Fl t Ar cpstr
+.Ar file ...
+.Sh DESCRIPTION
+.Nm
+is a command-line utility that organizes MP3, OGG, and FLAC audio files based
+upon their tag metadata. It works by processing each file and recursively
+processing each directory specified to it on the command-line. By default,
+.Nm
+uses
+.Xr mkdir 1
+and
+.Xr cp 1
+to process each file by means of a transfer string (see TRANSFER STRING) and a
+format string (see FORMAT STRING).
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl s Ar fmtstr
+Make
+.Nm
+use
+.Em fmtstr
+as the format string, overriding the environment variable
+.Em MORGFMT
+and the default format string.
+.It Fl t Ar cpstr
+Override the default transfer string and the environment variable
+.Em MORGCP
+with
+.Em cpstr .
+.It Fl v
+Verbose mode. Writes to
+.Em stderr
+all files processed.
+.El
+.Sh TRANSFER STRING
+The transfer string is the command(s) that are executed by
+.Xr sh 1
+in order to
+process a file. The transfer string can either be specified on the command-line
+or through the environment variable
+.Em MORGCP .
+The transfer string is first processed so that any occurrences of
+.Em %%
+are replaced by a
+.Sq % ;
+.Em %dst
+is replaced by the destination path that is specified by the transfer string; and
+.Em %src
+is replaced by the path to each file being processed. If neither the environment
+variable nor the command-line argument is present,
+the transfer string defaults to:
+.Pp
+.Dl mkdir -p \\"`dirname \\"%dst\\"`\\" && cp \\"%src\\" \\"%dst\\"
+.Pp
+This is a reasonable default in most use cases. One change that one
+might make would be to issue
+.Xr mv 1
+instead of
+.Xr cp 1
+in order to conserve disk space.
+.Sh FORMAT STRING
+Essentially, the format string is just a string that specifies the destination
+and file name template for the processed files. In the format string, a variety
+of special keywords are supported that specify their replacement by the
+corresponding metadata of the audio file. This works in much the same way that
+printf(1) work. The following keywords are supported:
+.Em %artist ,
+.Em %album ,
+.Em %genre ,
+.Em %title ,
+.Em %track ,
+.Em %type ,
+.Em %year ,
+and
+.Em %% .
+.Em %%
+refers to a literal
+.Sq %
+and
+.Em %type
+refers to the file extension of the original track
+.Dq ( flac ,
+.Dq ogg ,
+or
+.Dq mp3 ) .
+The others correspond to their respective tags in the metadata of the file.
+.Pp
+You can either specify the format string on the command-line, the environment variable
+.Em MORGFMT ,
+or use the default. The default format string is:
+.Pp
+.Dl /home/$USER/music/%artist/%artist - %album/%track %title.%type
+.Pp
+We use the environment variable
+.Em USER
+instead of
+.Sq ~
+because not all implementations of
+.Xr mkdir 1
+handle
+.Sq ~
+correctly.
+.Sh ENVIRONMENT
+The environment variables recognized by
+.Nm
+are as follows:
+.Bl -tag -width Ds
+.It MORGCP
+Specify the transfer string that is executed by
+.Xr sh 1
+to be used.
+.It MORGFMT
+Specify the format string to be used.
+.It MORGREPLACE
+An even length string that defines what single character replacements to make.
+Each character in an even position is replaced by the subsequent character in
+the odd position. Defaults to
+.Dq /_ .
+A more portable value might be
+.Dq /_:-?_ .
+.El
+.Sh AUTHORS
+This program was created by Sturm Mabie
+.Mt ( sturm@cryptm.org ) .
