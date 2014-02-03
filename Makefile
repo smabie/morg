@@ -15,3 +15,6 @@ ifeq ($(shell uname),Linux)
 endif
 all:
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $(FILES) -o $(PROG)
+clean:
+	rm $(PROG)
+
