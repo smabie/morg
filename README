@@ -9,6 +9,7 @@ Features:
 
 Dependencies:
     * taglib (sometimes called libtag) 
+    * libbsd (under Linux only)
 
 Check out INSTALL for installation instructions. Check out the man
 page for usage info.
