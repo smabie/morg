@@ -27,6 +27,8 @@
 #define REPLACESTR "/_"
 
 #ifdef __GLIBC__
+#include <bsd/bsd.h>
+
 #undef basename
 #undef dirname
 #define basename bsd_basename
@@ -34,8 +36,6 @@
 
 char *bsd_basename(const char *);
 char *bsd_dirname(const char *);
-size_t strlcat(char *, const char *, size_t);
-size_t strlcpy(char *, const char *, size_t);
 #endif  /* __GLIBC__ */
 
 int copy_file(const char *);
