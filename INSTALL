@@ -3,6 +3,3 @@ Compile and install with:
 $ make
 $ cp morg /path/to/bin
 $ cp morg.1 /path/to/man
-
-If you're using a shitty man page formatter like groff, the man page
-might be fucked up. The pre-formatted man page morg.0 is included.
